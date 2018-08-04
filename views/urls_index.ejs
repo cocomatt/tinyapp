@@ -4,6 +4,36 @@
   <title>TinyApp</title>
 </head>
 <body>
-
+  <header>
+    <% include ./partials/_header %>
+  </header>
+  <main>
+    <section class="content">
+      <h1>Your short URLs</h1>
+      <section class="urls">
+        <table class="urls_table">
+          <thead>
+            <tr>
+              <th>Short URL</th>
+              <th>Long URL</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (key in urls) { %>
+              <tr>
+                <td><a href="/urls/<%= key %>"><%= key %></a></td>
+                <td><%= urls[key] %></td>
+                <td><form method="POST" action="/urls/<%= key %>/delete"><a href="/urls/<%= key %>">Edit</a><button name="button">Delete</button></form></td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </section>
+      <section class="shorten_url">
+        <a href="/urls/new">Shorten another URL</a>
+      </section>
+    </section>
+  </main>
 </body>
 </html>

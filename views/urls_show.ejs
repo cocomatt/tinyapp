@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>TinyApp</title>
+</head>
+<body>
+  <header>
+    <% include ./partials/_header %>
+  </header>
+  <main>
+    <section class="content">
+      <h1>The short URL and the long URL</h1>
+      <p>Short URL: <%= shortURL %></p>
+      <p>Long URL: <%= longURL %></p>
+      <a href="/urls/new">Shorten another URL</a>
+    </section>
+  </main>
+</body>
+</html>

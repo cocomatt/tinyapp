@@ -17,7 +17,20 @@ app.get("/", (req, res) => {
 
 app.get("/urls", (req, res) => {
   let templateVars = { urls: urlDatabase };
+  console.log(templateVars);
+  for (key in templateVars.urls) {
+    console.log("key:", key);
+  }
   res.render("urls_index", templateVars);
+});
+
+app.get("/urls/:id", (req, res) => {
+  let templateVars = {
+    shortURL: req.params.id,
+    longURL: urlDatabase[req.params.id]
+  };
+  console.log(templateVars.longURL);
+  res.render("urls_show", templateVars);
 });
 
 app.get("/urls.json", (req, res) => {
