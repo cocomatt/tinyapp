@@ -17,14 +17,16 @@
               <th>Short URL</th>
               <th>Long URL</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <% for (key in urls) { %>
               <tr>
-                <td><a href="/urls/<%= key %>"><%= key %></a></td>
+                <td><a href="/u/<%= key %>"><%= key %></a></td>
                 <td><%= urls[key] %></td>
-                <td><form method="POST" action="/urls/<%= key %>/delete"><a href="/urls/<%= key %>">Edit</a><button name="button">Delete</button></form></td>
+                <td><form method="POST" action="/urls/<%= key %>"><a href="/urls/<%= key %>">Edit</a></form></td>
+                <td><form method="POST" action="/urls"><a href="/urls/<%= key %>/delete">Delete</a></form></td>
               </tr>
             <% } %>
           </tbody>
