@@ -11,8 +11,13 @@
     <section class="content">
       <h1>The short URL and the long URL</h1>
       <p>Short URL: <%= shortURL %></p>
-      <p>Long URL: <%= longURL %></p>
+      <p><form action="/urls/<%= shortURL %>" method="POST">
+        <label for="longURL">Long URL:</label>
+        <input id="newLongURL" type="text" name="newLongURL" value="<%= longURL %>">
+        <input type="submit" value="Update">
+      </form></p>
       <a href="/urls/new">Shorten another URL</a>
+      <a href="/urls"> Back to index</a>
     </section>
   </main>
 </body>

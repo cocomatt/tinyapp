@@ -21,12 +21,14 @@
             </tr>
           </thead>
           <tbody>
-            <% for (key in urls) { %>
+            <% for (url in urls) { %>
               <tr>
-                <td><a href="/u/<%= key %>"><%= key %></a></td>
-                <td><%= urls[key] %></td>
-                <td><form method="POST" action="/urls/<%= key %>"><a href="/urls/<%= key %>">Edit</a></form></td>
-                <td><form method="POST" action="/urls"><a href="/urls/<%= key %>/delete">Delete</a></form></td>
+                <td><a href="/u/<%= url %>"><%= url %></a></td>
+                <td><%= urls[url] %></td>
+                <td><form method="POST" action="/urls/<%= url %>">
+                  <a href="/urls/<%= url %>">Edit</a></form></td>
+                <td><form method="POST" action="/urls/<%= url %>/delete">
+                  <input type="submit" value="Delete"></form></td>
               </tr>
             <% } %>
           </tbody>

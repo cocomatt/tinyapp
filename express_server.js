@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 8080;
 const bodyParser = require("body-parser");
 
 app.set("view engine", "ejs");
+
+
 app.use(bodyParser.urlencoded({extended: true}));
 
 var urlDatabase = {
@@ -69,12 +71,10 @@ app.get("/urls/:id", (req, res) => {
 // });
 
 app.post("/urls", (req, res) => {
-  // let longURL = req.body.longURL;
-  // let shortURL = generateRandomString();
-  // urlDatabase[shortURL] = {longURL: longURL};
-  // res.redirect(`/urls/${shortURL}`);
-  console.log(req.body);
-  res.send("Ok");
+  let longURL = req.body.longURL;
+  let shortURL = generateRandomString();
+  urlDatabase[shortURL] = longURL;
+  res.redirect(`/urls/${shortURL}`);
 });
 
 //"Posts" deletion of short URL and long URL
@@ -83,16 +83,10 @@ app.post("/urls/:id/delete", (req, res) => {
   res.redirect("/urls");
 });
 
-// app.post("urls/:id/delete", (req, res) => {
-//   console.log(urlDatabase);
-//   delete urlDatabase[req.params.id];
-//   console.log(urlDatabase);
-//   res.redirect("/urls");
-// });
-
-// app.get("/hello", (req, res) => {
-//   res.end("<html><body>Hello <b>World</b></body></html>\n");
-// });
+app.post("/urls/:id", (req, res) => {
+  urlDatabase[req.params.id] = req.body.newLongURL;
+  res.redirect("/urls");
+});
 
 app.get("/u/:shortURL", (req, res) => {
   let longURL = urlDatabase[req.params.shortURL];
