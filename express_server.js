@@ -6,14 +6,15 @@
 require('dotenv').config();
 
 const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 8080;
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
+const app = express();
 app.set("view engine", "ejs");
-
-
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+
+const PORT = process.env.PORT || 8080;
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -36,30 +37,39 @@ function generateRandomString() {
 // ROUTE HANDLING
 // ================================================================
 
-app.get("/", (req, res) => {
-  res.send("Hello!");
+app.post("/login", (req, res) => {
+  res.cookie("username", req.body.username);
+  console.log('Cookies: ', res.cookie);
+  res.redirect("/urls");
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+  res.redirect("/urls");
 });
 
 app.get("/urls", (req, res) => {
   let templateVars = {
-    urls: urlDatabase
+    urls: urlDatabase,
+    username: req.cookies.username
   };
   console.log(templateVars);
   res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-  // let templateVars = {
-  //   urls: urlDatabase
-  // }
-  console.log("added new url:");//, templateVars)
-  res.render("urls_new");//, templateVars);
+  let templateVars = {
+    urls: urlDatabase,
+    username: req.cookies.username
+  };
+  res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
-    longURL: urlDatabase[req.params.id]
+    longURL: urlDatabase[req.params.id],
+    username: req.cookies.username
   };
   console.log(templateVars.shortURL)
   console.log(templateVars.longURL);
