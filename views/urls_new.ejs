@@ -7,10 +7,15 @@
   <header>
     <% include ./partials/_header %>
   </header>
-  <form action="/urls" method="POST">
-    <label for="longURL">Enter a URL:</label>
-    <input id="longURL" type="text" name="longURL" value="http://" style="width: 300px">
-    <input type="submit" value="Submit">
-  </form>
+  <main>
+    <section class="content">
+      <h1>Enter a new URL to shorten</h1>
+      <form action="/urls" method="POST">
+        <label for="longURL">Enter a URL:</label>
+        <input id="longURL" type="text" name="longURL" value="http://" style="width: 300px">
+        <input type="submit" value="Submit">
+      </form>
+    </section>
+  </main>
 </body>
 </html>
