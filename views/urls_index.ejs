@@ -21,13 +21,13 @@
             </tr>
           </thead>
           <tbody>
-            <% for (url in urls) { %>
+            <% for (shortURL in urls) { %>
               <tr>
-                <td><a href="/u/<%= url %>"><%= url %></a></td>
-                <td><%= urls[url] %></td>
-                <td><form method="POST" action="/urls/<%= url %>">
-                  <a href="/urls/<%= url %>">Edit</a></form></td>
-                <td><form method="POST" action="/urls/<%= url %>/delete">
+                <td><a href="/u/<%= shortURL %>"><%= shortURL %></a></td>
+                <td><%= urls[shortURL].longURL %></td>
+                <td><form method="POST" action="/urls/<%= shortURL %>">
+                  <a href="/urls/<%= shortURL %>">Edit</a></form></td>
+                <td><form method="POST" action="/urls/<%= shortURL %>/delete">
                   <input type="submit" value="Delete"></form></td>
               </tr>
             <% } %>
