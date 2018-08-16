@@ -8,6 +8,7 @@ require('dotenv').config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
+const bcrypt = require('bcryptjs');
 
 const app = express();
 app.set("view engine", "ejs");
@@ -47,17 +48,21 @@ const users = {
   "user1RandomID": {
     id: "user1RandomID",
     email: "user1@example.com",
-    password: "purple-monkey-dishwasher"
+    //password: "purple-monkey-dishwasher",
+    hashedPassword: "$2a$10$ENCqP/./iTE.YYzLVBJj3u.3LExUzmQvT16/ABCQnL5MtyoW66..m"
   },
   "user2RandomID": {
     id: "user2RandomID",
     email: "user2@example.com",
-    password: "funky-monkey"
+    // password: "funky-monkey"
+    hashedPassword : "$2a$10$hxoSGGN/CRtsC7XzkGD0PuVb.0EPztPMdHTG/TRA9sH0ThNWlMqm2"
   },
   "user3RandomID": {
     id: "user3RandomID",
     email: "user3@example.com",
-    password: "purple-rain"
+    // password: "purple-rain"
+    hashedPassword: "$2a$10$VRcN2rFb0saMpalEvUyive0ZewMLGQot1i1KOuW9ERl60ojRRR5Om"
+    // password: bcrypt.hashSync("purple-rain", 10)
   }
 };
 
@@ -83,7 +88,7 @@ function checkEmail(email) {
 
 function checkPassword(password) {
   for (user in users) {
-    if (users[user].password === password) {
+    if (bcrypt.compareSync(password, users[user].hashedPassword)) {
       return true;
     }
   } return false;
@@ -91,22 +96,22 @@ function checkPassword(password) {
 
 function findUser(email, password) {
   for (user in users) {
-    if ((users[user].email === email) && (users[user].password === password)) {
+    if ((users[user].email === email) && (bcrypt.compareSync(password, (users[user].hashedPassword)))) {
       return user;
     }
-  } return "";
+  } return false;
 }
 
 function generateUserRandomID(email, password) {
   let newUserRandomID = "";
   const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   for (let i = 0; i < 13; i++)
-  newUserRandomID += possible.charAt(Math.floor(Math.random() * possible.length));
-  users[newUserRandomID] = {
-    id: newUserRandomID,
-    email: email,
-    password: password
-  };
+    newUserRandomID += possible.charAt(Math.floor(Math.random() * possible.length));
+    users[newUserRandomID] = {
+      id: newUserRandomID,
+      email: email,
+      password: bcrypt.hashSync(password, 10)
+    };
   return newUserRandomID;
 }
 
@@ -218,7 +223,8 @@ app.post("/urls", (req, res) => {
     longURL: req.body.longURL,
     userID: req.cookies.user_id
   }
-  res.redirect(`/urls/${shortURL}`);
+  res.redirect("/urls");
+  // res.redirect(`/urls/${shortURL}`);
 });
 
 //"Posts" deletion of short URL and long URL
