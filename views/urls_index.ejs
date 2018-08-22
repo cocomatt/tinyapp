@@ -27,7 +27,7 @@
                 <td><%= urls[shortURL].longURL %></td>
                 <td><form method="POST" action="/urls/<%= shortURL %>">
                   <a href="/urls/<%= shortURL %>">Edit</a></form></td>
-                <td><form method="POST" action="/urls/<%= shortURL %>/delete">
+                <td><form method="POST" action="/urls/<%= shortURL %>/?_method=DELETE">
                   <input type="submit" value="Delete"></form></td>
               </tr>
             <% } %>
@@ -35,7 +35,7 @@
         </table>
       </section>
       <section class="shorten_url">
-        <a href="/urls/new">Shorten another URL</a>
+        <a href="/urls/new">Shorten a URL</a>
       </section>
     </section>
   </main>
